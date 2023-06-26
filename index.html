@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Интерактивные таблицы</title>
+ </head>
+ <body>  
+  <table width="100%" border="1" cellspacing="0" cellpadding="4">
+   <caption>Таблица 3.2. Маршруты </caption>  
+   <tr> 
+    <th>&nbsp;</th><th>Чебурашка</th>
+    <th>Крокодил Гена</th><th>Шапокляк</th>
+   </tr>
+   <tr> 
+    <td>Направления, пнд.</td>
+	<td><span class="dynamic"><img src="left.png"><img src="left.png"><img src="left.png"><img src="right.png"></span></td>
+	<td><span class="dynamic"><img src="top.png"><img src="left.png"><img src="right.png"></span></td>
+	<td><span class="dynamic"><img src="top.png"><img src="left.png"><img src="left.png"><img src="right.png"></span></td>
+   </tr>
+   <tr> 
+    <td>Направления, вторник.</td>
+	<td><span class="dynamic"><img src="top.png"><img src="bottom.png"><img src="left.png"><img src="right.png"></span></td>
+	<td><span class="dynamic"><img src="top.png"><img src="left.png"><img src="right.png"></span></td>
+	<td><span class="dynamic"><img src="right.png"><img src="top.png"><img src="left.png"></span></td>
+   </tr>
+   <tr> 
+    <td>Направления, среда</td>
+	<td><span class="dynamic"><img src="top.png"><img src="left.png"><img src="right.png"></span></td>
+	<td><span class="dynamic"><img src="top.png"><img src="left.png"><img src="right.png"></span></td>
+	<td><span class="dynamic"><img src="top.png"><img src="left.png"><img src="right.png"></span></td>
+   </tr>
+  </table>
+ </body>
+</html>
+
+<script>
+
+var elems = document.getElementsByClassName("dynamic"),
+ trampInput = document.createElement("input");
+ istdselect = false;
+            trampInput.type = "text";
+            trampInput.style.width = "128px";
+            trampInput.addEventListener("blur", function() {
+				let innerText = trampInput.value;
+				innerText = innerText.replace( /Л/gi, "<img src=\"left.png\">" );
+				innerText = innerText.replace( /П/gi, "<img src=\"right.png\">" );
+				innerText = innerText.replace( /Н/gi, "<img src=\"bottom.png\">" );					
+				innerText = innerText.replace( /В/gi, "<img src=\"top.png\">" );
+				trampInput.parentNode.innerHTML = innerText;
+				istdselect = false;	
+			}
+            , false);
+for (var i=0; i<elems.length; i++) {
+    var el = elems[i];
+    el.addEventListener("click", function() {
+        if (istdselect) return;
+		istdselect = true;
+		let innerText = this.innerHTML;
+		innerText = innerText.replace( /<img src=\"left.png\">/gi, "Л" );
+		innerText = innerText.replace( /<img src=\"right.png\">/gi, "П" );
+		innerText = innerText.replace( /<img src=\"bottom.png\">/gi, "Н" );
+		innerText = innerText.replace( /<img src=\"top.png\">/gi, "В" );
+        trampInput.value = innerText;
+        this.innerHTML = "";
+        this.appendChild(trampInput);
+        trampInput.focus();
+        trampInput.select()
+		}.bind(el), false);
+	};
+	
+</script>
